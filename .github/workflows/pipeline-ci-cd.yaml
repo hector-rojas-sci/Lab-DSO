@@ -34,3 +34,8 @@ jobs:
           out: 'reports'
           args: >
             --disableRetireJS
+
+      - name: "Crear imagen Docker"
+        run: |
+          docker build -f Dockerfile . -t webgoat/test
+          docker images
