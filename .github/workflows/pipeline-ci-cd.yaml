@@ -23,11 +23,9 @@ jobs:
         run: |
           sudo apt-get -y install jq
           curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest-beta
-          sudo mv /usr/local/bin/horusec /usr/bin/horusec
-          sudo horusec version
 
       - name: "Ejecutar SAST"
-        run: sudo horusec start -p="./"
+        run: horusec start -p="./"
 
       - name: "Compilacion del codigo"
         run: ./mvnw clean install
