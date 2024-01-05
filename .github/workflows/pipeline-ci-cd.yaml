@@ -39,3 +39,14 @@ jobs:
         run: |
           docker build -f Dockerfile . -t webgoat/test
           docker images
+
+      - name: "Evaluacion Docker Image - Image Scanning"
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'webgoat/test'
+          format: 'json'
+          output: 'trivy-resultados.json'
+          timeout: 10m0s
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+          scanners: vuln,secret,config
