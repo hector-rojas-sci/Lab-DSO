@@ -18,6 +18,14 @@ jobs:
         with:
           distribution: "temurin"
           java-version: "17"
+      
+      - name: "Instalacion Python"
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11.2"
+          
+      - name: "Instalar requests"
+        run: pip3 install requests
 
       - name: "Compilacion del codigo"
         run: ./mvnw clean install
@@ -66,3 +74,15 @@ jobs:
         run: |
           ip_webgoat=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' prueba)
           ./arachni-1.6.1.3-0.6.1.1/bin/arachni --check=* http://$ip_webgoat:8080/WebGoat/login
+
+      - name: "Tirar contenedor"
+        run: |
+          docker container stop prueba
+          docker container rm prueba
+
+      - name: "Subir reportes a Defect Dojo"
+        env:
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+        run: |
+          python3 upload-report.py -f trivy-resultados.json -t "Trivy Scan"
+          python3 upload-report.py -f reports/dependency-check-report.xml -t "Dependency Check Scan"

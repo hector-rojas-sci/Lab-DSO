@@ -2,7 +2,7 @@ import requests
 import argparse
 import os
 
-url_api = "http://18.218.244.166:8080/api/v2/{method}"
+url_api = "http://13.58.252.144:8080/api/v2/{method}"
 api_key = "Token {token}".format(token = os.environ['API_TOKEN'])
 
 def upload(file_report, type_scan):
@@ -18,7 +18,7 @@ def upload(file_report, type_scan):
 
     body = {
         'product_name': 'WebGoat',
-        'engagement_name': 'prueba',
+        'engagement_name': 'pruea lab DSO',
         'product_type_name': 'Research and Development',
         'active': True,
         'verified': True,
